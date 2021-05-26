@@ -16,6 +16,20 @@
     <link rel="stylesheet" href="/templates/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/templates/dist/assets/css/app.css">
     <link rel="shortcut icon" href="/templates/dist/assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <link src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css"></link>
+    <link src="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"></link>
+
+
+
+  
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+
+
+
 </head>
 
 <body>

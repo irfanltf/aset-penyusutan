@@ -2,19 +2,27 @@
      <ul class="menu">
          <li class="sidebar-title">Menu</li>
 
+<<<<<<< Updated upstream
          <li class="sidebar-item  ">
+=======
+         <li class="sidebar-item  active">
+>>>>>>> Stashed changes
              <a href="/aset" class='sidebar-link'>
                  <i class="bi bi-grid-1x2-fill"></i>
                  <span>Aset</span>
              </a>
          </li>
 
+<<<<<<< Updated upstream
          <li class="sidebar-item  ">
+=======
+        <!--  <li class="sidebar-item  ">
+>>>>>>> Stashed changes
              <a href="/penyusutan" class='sidebar-link'>
                  <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                  <span>Penyusutan</span>
              </a>
-         </li>
+         </li> -->
 
      </ul>
  </div>

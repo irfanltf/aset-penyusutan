@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< Updated upstream
 -- Generation Time: May 24, 2021 at 10:56 PM
+=======
+-- Generation Time: May 27, 2021 at 06:44 AM
+>>>>>>> Stashed changes
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.2
 
@@ -25,6 +29,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+<<<<<<< Updated upstream
+=======
+-- Table structure for table `aktiva_tetap`
+--
+
+CREATE TABLE `aktiva_tetap` (
+  `id` int(11) NOT NULL,
+  `kode_aktiva` varchar(10) NOT NULL,
+  `nama_aktiva` varchar(128) NOT NULL,
+  `harga_peroleh` double NOT NULL,
+  `tgl_pembelian` date NOT NULL,
+  `masa_manfaat` int(11) NOT NULL,
+  `nilai_residu` double NOT NULL,
+  `satuan` varchar(150) NOT NULL,
+  `jumlah_satuan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `aktiva_tetap`
+--
+
+INSERT INTO `aktiva_tetap` (`id`, `kode_aktiva`, `nama_aktiva`, `harga_peroleh`, `tgl_pembelian`, `masa_manfaat`, `nilai_residu`, `satuan`, `jumlah_satuan`) VALUES
+(1, '001', 'Komputer', 15000000, '2021-05-01', 5, 1200000, 'unit', 15),
+(2, '11', '1', 0, '2021-05-12', 1, 1, '1', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penyusutan`
+--
+
+CREATE TABLE `penyusutan` (
+  `id` int(11) NOT NULL,
+  `kode_penyusutan` varchar(10) NOT NULL,
+  `kode_aktiva` varchar(10) NOT NULL,
+  `priode` int(11) NOT NULL,
+  `nilai_penyusutan` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+>>>>>>> Stashed changes
 -- Table structure for table `user`
 --
 
@@ -48,6 +95,21 @@ INSERT INTO `user` (`id`, `username`, `password`, `last_login`, `last_logout`) V
 --
 
 --
+<<<<<<< Updated upstream
+=======
+-- Indexes for table `aktiva_tetap`
+--
+ALTER TABLE `aktiva_tetap`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `penyusutan`
+--
+ALTER TABLE `penyusutan`
+  ADD PRIMARY KEY (`id`);
+
+--
+>>>>>>> Stashed changes
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -58,6 +120,21 @@ ALTER TABLE `user`
 --
 
 --
+<<<<<<< Updated upstream
+=======
+-- AUTO_INCREMENT for table `aktiva_tetap`
+--
+ALTER TABLE `aktiva_tetap`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `penyusutan`
+--
+ALTER TABLE `penyusutan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+>>>>>>> Stashed changes
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
