@@ -4,6 +4,54 @@
 
 
 <?= $this->section('content') ?>
+
+<?php
+
+$bulan = date("n", strtotime($aset['tgl_pembelian']));
+
+switch ($bulan) {
+    case '1':
+        $value = 12;
+        break;
+    case '2':
+        $value = 11;
+        break;
+    case '3':
+        $value = 10;
+        break;
+    case '4':
+        $value = 9;
+        break;
+    case '5':
+        $value = 8;
+        break;
+    case '6':
+        $value = 7;
+        break;
+    case '7':
+        $value = 6;
+        break;
+    case '8':
+        $value = 5;
+        break;
+    case '9':
+        $value = 4;
+        break;
+    case '10':
+        $value = 3;
+        break;
+    case '11':
+        $value = 2;
+        break;
+    case '12':
+        $value = 1;
+        break;
+    default:
+        $value = 12;
+        break;
+}
+
+?>
 <div class="col-12">
     <div class="card">
         <div class="card-header">
@@ -13,91 +61,152 @@
             <form action="/aset/penyusutan_process/<?= $aset['id'] ?>" method="post">
                 <?= csrf_field(); ?>
                 <div class="row">
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="kode_akiva" class="form-label">Kode Akiva</label>
-                    <input type="text" name="kode_aktiva" class="form-control <?= ($validation->hasError('kode_aktiva')) ? 'is-invalid' : '' ?>" id="kode_akiva" aria-describedby="emailHelp" value="<?= (old('kode_aktiva')) ? old('kode_aktiva') : $aset['kode_aktiva'] ?>" readonly> <div  class="invalid-feedback">
-                 <?= $validation->getError('nama_aktiva'); ?>
-                    </div>
-                </div>
-                        </div>
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="nama_aktiva" class="form-label">Nama Aktiva</label>
-                    <input type="text" name="nama_aktiva" class="form-control <?= ($validation->hasError('nama_aktiva')) ? 'is-invalid' : '' ?>" id="nama_aktiva" value="<?= (old('nama_aktiva')) ? old('nama_aktiva') : $aset['nama_aktiva'] ?>" readonly>
-                <div  class="invalid-feedback">
-                 <?= $validation->getError('nama_aktiva'); ?>
-                    </div>
-                </div>
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <tr>
+                                <td>
+                                    <strong> Metode Garis Lurus </strong>
+                                </td>
+                                <td>
 
-                        
-                    </div>
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="Perolehan" class="form-label">Harga Perolehan</label>
-                    <input type="number" min="0" max="999999999999" name="harga_peroleh" class="form-control <?= ($validation->hasError('harga_peroleh')) ? 'is-invalid' : '' ?>" id="Perolehan" value="<?= (old('harga_peroleh')) ? old('harga_peroleh') : $aset['harga_peroleh'] ?>" readonly>
-                    <div  class="invalid-feedback">
-                 <?= $validation->getError('harga_peroleh'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="tgl_pembelian" class="form-label">Tanggal Pembelian</label>
-                    <input type="date" name="tgl_pembelian" class="form-control <?= ($validation->hasError('tgl_pembelian')) ? 'is-invalid' : '' ?>" id="tgl_pembelian" value="<?= (old('tgl_pembelian')) ? old('tgl_pembelian') : $aset['tgl_pembelian'] ?>" readonly>
-                        <div  class="invalid-feedback">
-                 <?= $validation->getError('tgl_pembelian'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Penyusutan
+                                </td>
+                                <td>
+                                    = <span class="text-danger">Presentase Penyusutan</span> x [(<span class="text-warning">Nilai Perolehan</span> - <span class="text-info">Nilai Sisa</span> )] : <span class="text-success">Umur</span>
+                                </td>
 
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="masa_manfaat" class="form-label">Umur <small>(konteks tahun)</small></label>
-                    <input type="number" min="1" max="999" name="masa_manfaat" class="form-control <?= ($validation->hasError('masa_manfaat')) ? 'is-invalid' : '' ?>" id="masa_manfaat" value="<?= (old('masa_manfaat')) ? old('masa_manfaat') : $aset['masa_manfaat'] ?>" readonly>
-                    <div  class="invalid-feedback">
-                 <?= $validation->getError('masa_manfaat'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="nilai_residu" class="form-label">Nilai Residu</label>
-                    <input type="text" name="nilai_residu" class="form-control <?= ($validation->hasError('nilai_residu')) ? 'is-invalid' : '' ?>" id="nilai_residu" value="<?= (old('nilai_residu')) ? old('nilai_residu') : $aset['nilai_residu'] ?>" readonly>
-                                   <div  class="invalid-feedback">
-                 <?= $validation->getError('nilai_residu'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
+                            </tr>
+                            <tr>
+                                <td>Kode Akiva tetap</td>
+                                <td>
+                                    = <span class="text-primary"><?= $aset['kode_aktiva'] ?></span>
+                                </td>
 
-                     <div class="col-6">
-                <div class="mb-3">
-                    <label for="satuan" class="form-label">Satuan </label>
-                    <input type="text" name="satuan" class="form-control <?= ($validation->hasError('satuan')) ? 'is-invalid' : '' ?>"  id="satuan" value="<?= (old('satuan')) ? old('satuan') : $aset['satuan'] ?>" placeholder="contoh : unit, buah" readonly>
-                                   <div  class="invalid-feedback">
-                 <?= $validation->getError('satuan'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
-                    <div class="col-6">
-                <div class="mb-3">
-                    <label for="jumlah_satuan" class="form-label">Jumlah Satuan</label>
-                    <input type="number" min="1" max="999"  name="jumlah_satuan" class="form-control <?= ($validation->hasError('jumlah_satuan')) ? 'is-invalid' : '' ?>"  id="jumlah_satuan"value="<?= (old('jumlah_satuan')) ? old('jumlah_satuan') : $aset['jumlah_satuan'] ?>" readonly>
-                                   <div  class="invalid-feedback">
-                 <?= $validation->getError('jumlah_satuan'); ?>
-                    </div>
-                </div>
-                        
-                    </div>
-                </div>
+                            </tr>
+                            <tr>
+                                <td>Nama Akiva tetap</td>
+                                <td>
+                                    = <span class="text-primary"><?= $aset['nama_aktiva'] ?></span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Harga Perolehan</td>
+                                <td>
+                                    = <span class="text-primary"><?= $aset['harga_peroleh'] ?></span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Nilai Sisa/Residu</td>
+                                <td>
+                                    = <span class="text-primary"><?= $aset['nilai_residu'] ?></span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    Umur
+                                </td>
+                                <td class="start-center">
+                                    = <span class="text-primary"><?= $aset['masa_manfaat']; ?> Tahun</span>
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <table class="table table-bordered">
+                            <tr>
+                                <td>Tahun</td>
+                                <td>Nilai Buku Awal</td>
+                                <td>Depresiasi Persen</td>
+                                <td>Jumlah Penyusutan</td>
+                                <td>Jumlah Akumulasi Penyusutan</td>
+                                <td>Nilai Buku Akhir</td>
+                            </tr>
+                            <?php
+
+                            $penyusutan = $value / 12 * ($aset['harga_peroleh'] - $aset['nilai_residu']) / $aset['masa_manfaat'];
+                            $penyusutan_full = 12 / 12 * ($aset['harga_peroleh'] - $aset['nilai_residu']) / $aset['masa_manfaat'];
+                            $penyusutan_end = (12 - $value) / 12 * ($aset['harga_peroleh'] - $aset['nilai_residu']) / $aset['masa_manfaat'];
+                            $nb_awal = $aset['harga_peroleh'];
+                            $akumulasi = $penyusutan;
 
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
+
+
+                            if (date("n", strtotime($aset['tgl_pembelian'])) == 1) {
+                                $umur =  $aset['masa_manfaat'] - 1;
+                            } else {
+                                $umur = $aset['masa_manfaat'];
+                            }
+                            for ($i = 0; $i <= $umur; $i++) : ?>
+                                <?php
+
+
+                                $p = $i == 0 ? $penyusutan : $penyusutan_full;
+
+                                if ($i == 0) {
+                                    $penyusutan;
+                                } else if ($i == $umur) {
+                                    $penyusutan_end;
+                                } else {
+                                    $penyusutan_full;
+                                }
+
+                                if ($i == 0) {
+                                    $persen = $penyusutan / $aset['harga_peroleh'] * 100;
+                                } else if ($i == $umur && date("n", strtotime($aset['tgl_pembelian'])) == 1) {
+                                    $persen = $penyusutan_full / $aset['harga_peroleh'] * 100;
+                                } else if ($i == $umur) {
+                                    $persen = $penyusutan_end / $aset['harga_peroleh'] * 100;
+                                } else {
+                                    $persen = $penyusutan_full / $aset['harga_peroleh'] * 100;
+                                }
+
+
+
+
+
+                                ?>
+                                <tr>
+
+
+                                    <td><?= date("Y", strtotime($aset['tgl_pembelian'])) + $i ?></td>
+
+
+                                    <td>Rp. <?= number_format($nb_awal, 0, ',', '.') ?></td>
+                                    <td>
+
+                                        <?= number_format($persen, 0, '.', '') ?>%
+
+                                    </td>
+                                    <td>Rp.<?= number_format($p, 0, ',', '.') ?></td>
+                                    <td>Rp.<?= number_format($akumulasi, 0, ',', '.') ?></td>
+                                    <td>Rp.<?= number_format($nb_awal - $p, 0, ',', '.') ?></td>
+                                </tr>
+
+
+                            <?php
+
+                                $akumulasi = $akumulasi + $p;
+                                $nb_awal = $nb_awal - $p;
+
+                            endfor; ?>
+                        </table>
+                    </div>
+
+
+                </div>
+
+
+                <a href="/cetak" class="btn btn-warning">Cetak</a>
                 <a href="/aset" class="btn btn-dark">Batal</a>
             </form>
         </div>

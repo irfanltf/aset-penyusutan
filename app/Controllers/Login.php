@@ -8,7 +8,8 @@ class Login extends BaseController
 {
 	protected $logins;
 
-	public function __construct(){
+	public function __construct()
+	{
 		$this->logins = new LoginModel();
 	}
 
@@ -31,34 +32,36 @@ class Login extends BaseController
 			]
 
 		])) {
-		return view('login/index');
-		}else{
-			
+			return view('login/index');
+		} else {
+
 			return $this->_login();
 		}
-
 	}
 
 
-	private function _login(){
+	private function _login()
+	{
 		$usr = $this->request->getVar('username');
 		$pw = $this->request->getVar('password');
 
+
+
 		$user = $this->logins->getLogin($usr, $pw);
-		if($user){
-			
-		session()->set($user);
-		return redirect()->to('/home');
-		}else{
-	
+		if ($user) {
+
+			session()->set($user);
+			return redirect()->to('/home');
+		} else {
+
 			session()->setFlashdata('pesan', 'Ada Kesalahan!');
 			return redirect()->to('/login');
 		}
 	}
 
-	public function logout(){
+	public function logout()
+	{
 		session()->destroy();
 		return redirect()->to('/login');
 	}
-
 }
