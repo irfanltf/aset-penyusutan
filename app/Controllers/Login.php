@@ -10,6 +10,7 @@ class Login extends BaseController
 
 	public function __construct()
 	{
+
 		$this->logins = new LoginModel();
 	}
 
@@ -48,9 +49,12 @@ class Login extends BaseController
 
 
 		$user = $this->logins->getLogin($usr, $pw);
+
 		if ($user) {
 
-			session()->set($user);
+			session()->set([
+				'username' => $user['username']
+			]);
 			return redirect()->to('/home');
 		} else {
 

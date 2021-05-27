@@ -1,9 +1,20 @@
-<?= $this->extend('templates/templates'); ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Halaman Penyusutan</title>
+    <style type="text/css">
+        .center {
+   text-align: center;
+   vertical-align: middle;
+
+}
 
 
+    </style>
+</head>
+<body>
 
 
-<?= $this->section('content') ?>
 
 <?php
 
@@ -52,33 +63,24 @@ switch ($bulan) {
 }
 
 ?>
-<div class="col-12">
-    <div class="card">
-        <div class="card-header">
-            <h4>Halaman Aset</h4>
-        </div>
-        <div class="card-body">
-            <form action="/aset/penyusutan_process/<?= $aset['id'] ?>" method="post">
-                <?= csrf_field(); ?>
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-striped">
-                            <tr>
-                                <td>
-                                    <strong> Metode Garis Lurus </strong>
-                                </td>
-                                <td>
 
+                                 
+                        <table >
+                            <tr>
+                                <td colspan="2" class="center"><h3>Sistem Informasi Akuntansi Penyusutan Aktiva Tetap</h3>
                                 </td>
+                               
+                            </tr> <tr>
+                                <td colspan="2" class="center"><h2>Metode Garis Lurus </h2>
+                                </td>
+                              
                             </tr>
-                            <tr>
+                          <tr>
                                 <td>
-                                    Penyusutan
                                 </td>
                                 <td>
-                                    = <span class="text-danger">Presentase Penyusutan</span> x [(<span class="text-warning">Nilai Perolehan</span> - <span class="text-info">Nilai Sisa</span> )] : <span class="text-success">Umur</span>
-                                </td>
 
+                                </td>
                             </tr>
                             <tr>
                                 <td>Kode Akiva tetap</td>
@@ -110,25 +112,31 @@ switch ($bulan) {
                             </tr>
 
                             <tr>
-                                <td>
-                                    Umur
+                                <td>Umur
                                 </td>
                                 <td class="start-center">
                                     = <span class="text-primary"><?= $aset['masa_manfaat']; ?> Tahun</span>
+                                </td>
+
+                            </tr>                          <tr>
+                                <td>
+                                </td>
+                                <td class="start-center">
+                                   
                                 </td>
 
                             </tr>
 
                         </table>
 
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>Tahun</td>
-                                <td>Nilai Buku Awal</td>
-                                <td>Depresiasi Persen</td>
-                                <td>Jumlah Penyusutan</td>
-                                <td>Jumlah Akumulasi Penyusutan</td>
-                                <td>Nilai Buku Akhir</td>
+                        <table border="1" cellpadding="2" style="margin-top: 20px">
+                            <tr class="center" >
+                                <th><strong>Tahun</strong></th>
+                                <th><strong>Nilai Buku Awal</strong></th>
+                                <th><strong>Depresiasi Persen</strong></th>
+                                <th><strong>Jumlah Penyusutan</strong></th>
+                                <th><strong>Jumlah Akumulasi Penyusutan</strong></th>
+                                <th><strong>Nilai Buku Akhir</strong></th>
                             </tr>
                             <?php
 
@@ -200,17 +208,5 @@ switch ($bulan) {
 
                             endfor; ?>
                         </table>
-                    </div>
-
-
-                </div>
-
-
-                <a href="/aset/cetak/<?= $aset['id'] ?>" class="btn btn-warning">Cetak</a>
-                <a href="/aset" class="btn btn-dark">Batal</a>
-            </form>
-        </div>
-    </div>
-</div>
-
-<?= $this->endSection(); ?>
+                  </body>
+</html>

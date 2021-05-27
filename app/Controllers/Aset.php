@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\AsetModel;
+use TCPDF;
 
 
 class Aset extends BaseController
@@ -9,11 +10,27 @@ class Aset extends BaseController
 	protected $aset;
 
 	public function __construct(){
+
+		if (!session()->has('username')) {
+        header('location:/login');
+        exit();
+    }
+	
 		$this->aset = new AsetModel();
+		$this->is_session_available();
 	}
+
+	private function is_session_available(){
+        if(session('username')){
+            return redirect()->to('/aset');
+        }else{
+            return redirect()->to('/login');
+        }
+    }
 
     public function index()
     {
+
 
     	$data = [
     		'aset' => $this->aset->findAll()
@@ -39,7 +56,7 @@ class Aset extends BaseController
 
     public function penyusutan($id){
 	
-	$data['validation'] = \Config\Services::validation();
+
 	$data['aset'] = $this->aset->find($id);
     	return view('aset/penyusutan', $data);
     }
@@ -216,6 +233,26 @@ class Aset extends BaseController
 
     }
 
+    public function cetak($id){
+
+    	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+    	// set document information
+$pdf->SetCreator(PDF_CREATOR);
+
+$pdf->SetTitle('Halaman Penyusutan');
+$pdf->SetSubject('Halaman Penyusutan');
+
+
+    	$pdf->AddPage();
+    	$data['aset'] = $this->aset->find($id);
+    	$data['request'] = \Config\Services::request();
+		
+    	$text = view('aset/penyusutan_cetak', $data);
+$pdf->writeHTML($text, true, 0, true, 0);
+$this->response->setContentType('application/pdf');
+$pdf->Output('example_052.pdf', 'i');
+    }
 
 
 
