@@ -14,6 +14,7 @@
 
                 <div class="col-6 text-end">
                     <a href="/aset/tambah" class="btn btn-sm btn-primary"> <i class="bi bi-file-diff"></i> Tambah Aktiva Tetap</a>
+                    <a href="/aset/cetak_aset" class="btn btn-sm btn-warning"> <i class="bi bi-printer-fill"></i> Cetak</a>
 
                 </div>
 
@@ -35,7 +36,7 @@
                 <thead class="text-center">
                     <tr>
                         <th>No.</th>
-                        <th>Aktiva</th>
+                        <th>Aktiva Tetap</th>
 
 
                         <th>Tanggal <br> Pembelian</th>
@@ -54,7 +55,8 @@
                                 <strong>Kode :</strong>
                                 <?= $key['kode_aktiva']; ?><br>
                                 <strong> Nama : </strong> <?= $key['nama_aktiva']; ?><br>
-                                <strong>Harga Perolehan : </strong><?= $key['harga_peroleh']; ?>
+                                <strong>Harga Perolehan : </strong><?= $key['harga_peroleh']; ?><br>
+                                <strong>Kategori : </strong><?= $key['nama_kategori'] ?>
                             </td>
 
 
@@ -81,7 +83,7 @@
 
     </div>
 </div>
-</div>
+
 
 
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\AsetModel;
 use TCPDF;
 
@@ -9,63 +10,62 @@ class Aset extends BaseController
 {
 	protected $aset;
 
-	public function __construct(){
+	public function __construct()
+	{
 
 		if (!session()->has('username')) {
-        header('location:/login');
-        exit();
-    }
-	
+			header('location:/login');
+			exit();
+		}
+
 		$this->aset = new AsetModel();
-		$this->is_session_available();
 	}
 
-	private function is_session_available(){
-        if(session('username')){
-            return redirect()->to('/aset');
-        }else{
-            return redirect()->to('/login');
-        }
-    }
-
-    public function index()
-    {
+	public function index()
+	{
 
 
-    	$data = [
-    		'aset' => $this->aset->findAll()
-    	];
+		$data = [
+			'title' => 'Halaman aset',
+			'aset' => $this->aset->dataAset()
+		];
 
 
-        return view('aset/index', $data);
-    }
+		return view('aset/index', $data);
+	}
 
 
-    public function tambah(){
-	
-	$data['validation'] = \Config\Services::validation();
-    	return view('aset/tambah', $data);
-    }
+	public function tambah()
+	{
+		$data['title'] =   'Halaman Tambah Data Aset';
+		$data['validation'] = \Config\Services::validation();
+		return view('aset/tambah', $data);
+	}
 
-     public function edit($id){
-	
-	$data['validation'] = \Config\Services::validation();
-	$data['aset'] = $this->aset->find($id);
-    	return view('aset/edit', $data);
-    }
+	public function edit($id)
+	{
 
-    public function penyusutan($id){
-	
+		$data['title'] =   'Halaman Edit Data Aset';
+		$data['validation'] = \Config\Services::validation();
+		$data['aset'] = $this->aset->find($id);
+		return view('aset/edit', $data);
+	}
 
-	$data['aset'] = $this->aset->find($id);
-    	return view('aset/penyusutan', $data);
-    }
+	public function penyusutan($id)
+	{
 
-    public function tambah_proses(){
+		$data['title'] =   'Halaman Hitung Penyusutan Aset';
 
-    	if (!$this->validate([
+		$data['aset'] = $this->aset->find($id);
+		return view('aset/penyusutan', $data);
+	}
+
+	public function tambah_proses()
+	{
+
+		if (!$this->validate([
 			'kode_aktiva' => [
-				'rules'=> 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]',
+				'rules' => 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]',
 				'errors' => [
 					'required' => 'Kode Aktiva Harus Diisi',
 					'is_unique' => 'Kode Aktiva Sudah Ada',
@@ -117,7 +117,7 @@ class Aset extends BaseController
 
 
 		])) {
-			
+
 			return redirect()->to('/aset/tambah')->withInput();
 		}
 
@@ -134,20 +134,19 @@ class Aset extends BaseController
 
 		session()->setFlashdata('pesan', 'Berhasil menambahkan Aset!');
 		return redirect()->to('/aset');
+	}
 
 
-    }
-
-
-    public function update($id){
-
-
+	public function update($id)
+	{
 
 
 
-    	if (!$this->validate([
+
+
+		if (!$this->validate([
 			'kode_aktiva' => [
-				'rules'=> 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]',
+				'rules' => 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]',
 				'errors' => [
 					'required' => 'Kode Aktiva Harus Diisi',
 					'is_unique' => 'Kode Aktiva Sudah Ada',
@@ -199,7 +198,7 @@ class Aset extends BaseController
 
 
 		])) {
-			
+
 			return redirect()->to('/aset/edit')->withInput();
 		}
 
@@ -217,45 +216,58 @@ class Aset extends BaseController
 
 		session()->setFlashdata('pesan', 'Berhasil mengubah Aset!');
 		return redirect()->to('/aset');
+	}
+
+	public function hapus($id)
+	{
+
+		$aset = $this->aset->find($id);
+
+		$this->aset->delete($id);
+		session()->setFlashdata('pesan', 'Data berhasil dihapus');
+		return redirect()->to('/aset');
+	}
+
+	public function cetak($id)
+	{
+
+		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+		// set document information
+		$pdf->SetCreator(PDF_CREATOR);
+
+		$pdf->SetTitle('Halaman Penyusutan');
+		$pdf->SetSubject('Halaman Penyusutan');
 
 
-    }
+		$pdf->AddPage();
+		$data['aset'] = $this->aset->find($id);
+		$data['request'] = \Config\Services::request();
 
-    public function hapus($id){
+		$text = view('aset/penyusutan_cetak', $data);
+		$pdf->writeHTML($text, true, 0, true, 0);
+		$this->response->setContentType('application/pdf');
+		$pdf->Output('Perhitungan Penyusutan.pdf', 'i');
+	}
+	public function cetak_aset()
+	{
 
-    	$aset = $this->aset->find($id);
+		$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-    	$this->aset->delete($id);
-    	session()->setFlashdata('pesan', 'Data berhasil disimpan');
-    	return redirect()->to('/aset');
+		// set document information
+		$pdf->SetCreator(PDF_CREATOR);
 
-
-
-    }
-
-    public function cetak($id){
-
-    	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-    	// set document information
-$pdf->SetCreator(PDF_CREATOR);
-
-$pdf->SetTitle('Halaman Penyusutan');
-$pdf->SetSubject('Halaman Penyusutan');
+		$pdf->SetTitle('Halaman Penyusutan');
+		$pdf->SetSubject('Halaman Penyusutan');
 
 
-    	$pdf->AddPage();
-    	$data['aset'] = $this->aset->find($id);
-    	$data['request'] = \Config\Services::request();
-		
-    	$text = view('aset/penyusutan_cetak', $data);
-$pdf->writeHTML($text, true, 0, true, 0);
-$this->response->setContentType('application/pdf');
-$pdf->Output('example_052.pdf', 'i');
-    }
+		$pdf->AddPage('L', 'A4');
+		$data['aset'] = $this->aset->dataAset();
 
 
-
-
-
+		$text = view('aset/aset_cetak', $data);
+		$pdf->writeHTML($text, true, 0, true, 0);
+		$this->response->setContentType('application/pdf');
+		$pdf->Output('Data Aset.pdf', 'i');
+	}
 }
