@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\AsetModel;
+use App\Models\KategoriModel;
 use TCPDF;
 
 
 class Aset extends BaseController
 {
 	protected $aset;
+	protected $kategori;
 
 	public function __construct()
 	{
@@ -19,6 +21,7 @@ class Aset extends BaseController
 		}
 
 		$this->aset = new AsetModel();
+		$this->kategori = new KategoriModel();
 	}
 
 	public function index()
@@ -37,6 +40,7 @@ class Aset extends BaseController
 
 	public function tambah()
 	{
+		$data['kategori'] = $this->kategori->findAll();
 		$data['title'] =   'Halaman Tambah Data Aset';
 		$data['validation'] = \Config\Services::validation();
 		return view('aset/tambah', $data);
@@ -44,10 +48,11 @@ class Aset extends BaseController
 
 	public function edit($id)
 	{
-
+		// dd($this->aset->dataAsetById($id));
+		$data['kategori'] = $this->kategori->findAll();
+		$data['aset'] = $this->aset->dataAsetById($id);
 		$data['title'] =   'Halaman Edit Data Aset';
 		$data['validation'] = \Config\Services::validation();
-		$data['aset'] = $this->aset->find($id);
 		return view('aset/edit', $data);
 	}
 
@@ -70,6 +75,12 @@ class Aset extends BaseController
 					'required' => 'Kode Aktiva Harus Diisi',
 					'is_unique' => 'Kode Aktiva Sudah Ada',
 					'max_length' => 'Kode Terlalu Panjang'
+				]
+			],
+			'kode_kategori' => [
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'Kode Tidak Boleh Kosong!'
 				]
 			],
 			'nama_aktiva' => [
@@ -123,6 +134,7 @@ class Aset extends BaseController
 
 		$this->aset->save([
 			'kode_aktiva' => $this->request->getVar('kode_aktiva'),
+			'kode_kategori' => $this->request->getVar('kode_kategori'),
 			'nama_aktiva' => $this->request->getVar('nama_aktiva'),
 			'harga_peroleh' => $this->request->getVar('harga_peroleh'),
 			'tgl_pembelian' => $this->request->getVar('tgl_pembelian'),
@@ -139,18 +151,29 @@ class Aset extends BaseController
 
 	public function update($id)
 	{
+		$aset = $this->aset->where(['id' => $id])->first();
 
+		if ($aset['kode_aktiva'] == $this->request->getVar('kode_aktiva')) {
 
-
+			$rule_kode = 'required|max_length[8]';
+		} else {
+			$rule_kode = 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]';
+		}
 
 
 		if (!$this->validate([
 			'kode_aktiva' => [
-				'rules' => 'required|is_unique[aktiva_tetap.kode_aktiva]|max_length[8]',
+				'rules' => $rule_kode,
 				'errors' => [
 					'required' => 'Kode Aktiva Harus Diisi',
 					'is_unique' => 'Kode Aktiva Sudah Ada',
 					'max_length' => 'Kode Terlalu Panjang'
+				]
+			],
+			'kode_kategori' => [
+				'rules' => 'required',
+				'errors' => [
+					'required' => 'Kode Tidak Boleh Kosong!'
 				]
 			],
 			'nama_aktiva' => [
@@ -199,12 +222,18 @@ class Aset extends BaseController
 
 		])) {
 
-			return redirect()->to('/aset/edit')->withInput();
+
+
+			return redirect()->to('/aset/edit/' . $id)->withInput();
 		}
+
+
+
 
 		$this->aset->save([
 			'id' => $id,
 			'kode_aktiva' => $this->request->getVar('kode_aktiva'),
+			'kode_kategori' => $this->request->getVar('kode_kategori'),
 			'nama_aktiva' => $this->request->getVar('nama_aktiva'),
 			'harga_peroleh' => $this->request->getVar('harga_peroleh'),
 			'tgl_pembelian' => $this->request->getVar('tgl_pembelian'),

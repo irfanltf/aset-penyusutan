@@ -1,18 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< Updated upstream
--- Generation Time: May 24, 2021 at 10:56 PM
-=======
--- Generation Time: May 27, 2021 at 06:44 AM
->>>>>>> Stashed changes
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.2
+-- Generation Time: May 28, 2021 at 11:21 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -29,14 +24,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
-<<<<<<< Updated upstream
-=======
 -- Table structure for table `aktiva_tetap`
 --
 
 CREATE TABLE `aktiva_tetap` (
   `id` int(11) NOT NULL,
   `kode_aktiva` varchar(10) NOT NULL,
+  `kode_kategori` varchar(8) NOT NULL,
   `nama_aktiva` varchar(128) NOT NULL,
   `harga_peroleh` double NOT NULL,
   `tgl_pembelian` date NOT NULL,
@@ -50,28 +44,41 @@ CREATE TABLE `aktiva_tetap` (
 -- Dumping data for table `aktiva_tetap`
 --
 
-INSERT INTO `aktiva_tetap` (`id`, `kode_aktiva`, `nama_aktiva`, `harga_peroleh`, `tgl_pembelian`, `masa_manfaat`, `nilai_residu`, `satuan`, `jumlah_satuan`) VALUES
-(1, '001', 'Komputer', 15000000, '2021-05-01', 5, 1200000, 'unit', 15),
-(2, '11', '1', 0, '2021-05-12', 1, 1, '1', 1);
+INSERT INTO `aktiva_tetap` (`id`, `kode_aktiva`, `kode_kategori`, `nama_aktiva`, `harga_peroleh`, `tgl_pembelian`, `masa_manfaat`, `nilai_residu`, `satuan`, `jumlah_satuan`) VALUES
+(1, '001', '003', 'Komputer', 4500000, '2021-01-01', 5, 0, 'unit', 1),
+(2, '002', '005', 'Printer', 24000000, '2021-01-12', 5, 2000000, 'unit', 20),
+(7, '003', '005', 'Kulkas', 125000000, '2021-01-12', 10, 5000000, 'unit', 5),
+(8, '004', '004', 'Sepeda Motor', 80000000, '2021-01-12', 10, 10000000, 'unit', 2),
+(9, '005', '005', 'LCD Proyektor', 50000000, '2021-01-12', 10, 5000000, 'unit', 20),
+(11, '012', '002', 'Handphone', 8000000, '2021-05-12', 2, 500000, 'unit', 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `penyusutan`
+-- Table structure for table `aktiva_tetap_kategori`
 --
 
-CREATE TABLE `penyusutan` (
+CREATE TABLE `aktiva_tetap_kategori` (
   `id` int(11) NOT NULL,
-  `kode_penyusutan` varchar(10) NOT NULL,
-  `kode_aktiva` varchar(10) NOT NULL,
-  `priode` int(11) NOT NULL,
-  `nilai_penyusutan` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `kode_kategori` varchar(10) NOT NULL,
+  `nama_kategori` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `aktiva_tetap_kategori`
+--
+
+INSERT INTO `aktiva_tetap_kategori` (`id`, `kode_kategori`, `nama_kategori`) VALUES
+(1, '001', 'Gedung dan Bangunan'),
+(2, '002', 'Tanah'),
+(3, '003', 'Peralatan'),
+(4, '004', 'Kendaraan'),
+(5, '005', 'Mesin'),
+(7, '009', 'Test');
 
 -- --------------------------------------------------------
 
 --
->>>>>>> Stashed changes
 -- Table structure for table `user`
 --
 
@@ -95,21 +102,18 @@ INSERT INTO `user` (`id`, `username`, `password`, `last_login`, `last_logout`) V
 --
 
 --
-<<<<<<< Updated upstream
-=======
 -- Indexes for table `aktiva_tetap`
 --
 ALTER TABLE `aktiva_tetap`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `penyusutan`
+-- Indexes for table `aktiva_tetap_kategori`
 --
-ALTER TABLE `penyusutan`
+ALTER TABLE `aktiva_tetap_kategori`
   ADD PRIMARY KEY (`id`);
 
 --
->>>>>>> Stashed changes
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -120,21 +124,18 @@ ALTER TABLE `user`
 --
 
 --
-<<<<<<< Updated upstream
-=======
 -- AUTO_INCREMENT for table `aktiva_tetap`
 --
 ALTER TABLE `aktiva_tetap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `penyusutan`
+-- AUTO_INCREMENT for table `aktiva_tetap_kategori`
 --
-ALTER TABLE `penyusutan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `aktiva_tetap_kategori`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
->>>>>>> Stashed changes
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`

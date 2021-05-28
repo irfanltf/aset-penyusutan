@@ -91,10 +91,19 @@ class Kategori extends BaseController
 
     public function update($id)
     {
+        $kat = $this->kategori->where(['id' => $id])->first();
+
+
+        if ($kat['kode_kategori'] == $this->request->getVar('kode_kategori')) {
+
+            $rule_kode = 'required|max_length[8]';
+        } else {
+            $rule_kode = 'required|is_unique[aktiva_tetap_kategori.kode_kategori]|max_length[8]';
+        }
 
         if (!$this->validate([
             'kode_kategori' => [
-                'rules' => 'required|is_unique[aktiva_tetap_kategori.kode_kategori]|max_length[8]',
+                'rules' => $rule_kode,
                 'errors' => [
                     'required' => 'Kode Kategori Harus Diisi',
                     'is_unique' => 'Kode Kategori Sudah Ada',
@@ -111,7 +120,7 @@ class Kategori extends BaseController
 
         ])) {
 
-            return redirect()->to('/kategori/edit')->withInput();
+            return redirect()->to('/kategori/edit/' . $id)->withInput();
         }
         $this->kategori->save([
             'id' => $id,
